@@ -1,4 +1,4 @@
-import { JobParameters } from '../../DataServices/types';
+import { JobParameters } from '../../api/types';
 import { DescriptionField, MenuItem, QueryDates, Scenario, Status } from '../types';
 
 interface ScenariosProps {
@@ -43,10 +43,7 @@ interface ScenariosProps {
    * @param field object property e.g.: data.mooring
    * @param value to filter to a specific value
    */
-  dataFilterbyProperty?: {
-    field: string;
-    value?: string | null;
-  };
+  dataFilterbyProperty?: dataFilterbyPropertyObj[];
   /**
    * Backend host
    */
@@ -55,6 +52,10 @@ interface ScenariosProps {
    * Authorization header to backend call
    */
   token: string;
+  /**
+   * Object to filter data
+   */
+  queryBody?: QueryBody[];
   /**
    * Scenario connection to fetch scenario by date
    */
@@ -152,6 +153,22 @@ interface ScenariosProps {
    * Time zone (IANA format) for date display
    */
   timeZone?: string;
+  /**
+   * Set debug mode on to track what SignalR is emitting
+   */
+  debug?: boolean;
+}
+
+interface QueryBody {
+  Item: string;
+  QueryOperator: string;
+  Value: string;
+}
+
+interface dataFilterbyPropertyObj {
+  field: string;
+  value?: string | null;
 }
 
 export default ScenariosProps;
+export { QueryBody };

@@ -37,7 +37,7 @@ const ScenarioList = (props: ScenarioListProps) => {
     setGroupedScenarios(
       showHour || showDate
         ? groupBy(scenarios, (scenario) => {
-            return scenario.dateTime ? format(parseISO(scenario.dateTime), 'yyyy-MM-dd') : '';
+            return scenario.dateTime ? format(parseISO(scenario.dateTime.split('.')[0]), 'yyyy-MM-dd') : '';
           })
         : groupBy(scenarios, (scenario) => scenario.dateTime),
     );
@@ -55,27 +55,27 @@ const ScenarioList = (props: ScenarioListProps) => {
       .map((scenario) => {
         return (
           <div
-            key={scenario.id}
+            key={scenario.fullName}
             onClick={() => onScenarioClick(scenario)}
             onKeyPress={() => onScenarioClick(scenario)}
             role="presentation"
             className={classNames(classes.listItem, {
-              [classes.selectedItem]: selectedId === getObjectProperty(scenario, 'id'),
+              [classes.selectedItem]: selectedId === getObjectProperty(scenario, 'fullName'),
             })}
           >
             <ScenarioItem
               name={getObjectProperty(scenario.data, nameField)}
               description={getDescriptions(scenario, descriptionFields, timeZone)}
               date={showDate ? (scenario.dateTime ? scenario.dateTime.toString() : '') : null}
-              key={scenario.id}
-              isSelected={selectedId === getObjectProperty(scenario, 'id')}
+              key={scenario.fullName}
+              isSelected={selectedId === getObjectProperty(scenario, 'fullName')}
               onContextMenuClick={onContextMenuClick}
               menu={buildMenu(scenario)}
               showHour={showHour}
               showMenu={showMenu}
               showStatus={showStatus}
               scenario={scenario}
-              status={checkStatus(scenario, status)}
+              status={checkStatus(scenario.lastJob, status)}
               timeZone={timeZone}
             />
           </div>
@@ -104,8 +104,8 @@ const ScenarioList = (props: ScenarioListProps) => {
   };
 
   const onScenarioClick = (scenario: Scenario) => {
-    if (scenario && selectedId !== getObjectProperty(scenario, 'id')) {
-      setSelectedId(getObjectProperty(scenario, 'id'));
+    if (scenario && selectedId !== getObjectProperty(scenario, 'fullName')) {
+      setSelectedId(getObjectProperty(scenario, 'fullName'));
     }
     if (onScenarioSelected) {
       onScenarioSelected(scenario);
@@ -120,9 +120,9 @@ const ScenarioList = (props: ScenarioListProps) => {
       .reverse()
       .map((key) => (
         <div key={key}>
-          {showDate && buildDateArea(key)}
+          {showDate && key && buildDateArea(key)}
           <div>
-            {buildScenariosList(groupedScenarios[key])}
+            {key && buildScenariosList(groupedScenarios[key])}
             <Divider variant="inset" className={classes.divider} />
           </div>
         </div>
