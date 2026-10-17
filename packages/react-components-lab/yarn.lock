@@ -13647,14 +13647,6 @@ protoduck@^5.0.1:
   dependencies:
     genfun "^5.0.0"
 
-proxy-addr@~2.0.5:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.6.tgz#fdc2336505447d3f2f2c638ed272caf614bbb2bf"
-  integrity sha512-dh/frvCBVmSsDYzw6n926jv974gddhkFPfiN8hPOi30Wax25QZyZEGveluCgliBnqmuM+UJmBErbAUFIoDbjOw==
-  dependencies:
-    forwarded "~0.1.2"
-    ipaddr.js "1.9.1"
-
 prr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
